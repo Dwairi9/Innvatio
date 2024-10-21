@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Innvatio.Server", "Innvatio.Server\Innvatio.Server.csproj", "{5EAFA241-D6C7-4B06-974C-C7F140506F1D}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "innvatio.client", "innvatio.client\innvatio.client.esproj", "{2A81F3FB-9CE8-40AD-9880-F75DAF489E80}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5EAFA241-D6C7-4B06-974C-C7F140506F1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EAFA241-D6C7-4B06-974C-C7F140506F1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EAFA241-D6C7-4B06-974C-C7F140506F1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EAFA241-D6C7-4B06-974C-C7F140506F1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A81F3FB-9CE8-40AD-9880-F75DAF489E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A81F3FB-9CE8-40AD-9880-F75DAF489E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A81F3FB-9CE8-40AD-9880-F75DAF489E80}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2A81F3FB-9CE8-40AD-9880-F75DAF489E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A81F3FB-9CE8-40AD-9880-F75DAF489E80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A81F3FB-9CE8-40AD-9880-F75DAF489E80}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {83AA1BEA-1F1A-4CAA-86FD-45D211EBDF3F}
+	EndGlobalSection
+EndGlobal
