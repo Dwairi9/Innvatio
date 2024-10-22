@@ -4,7 +4,7 @@ import React from "react";
 import { Input, Select, SelectItem } from "@nextui-org/react";
 import { cn } from "@nextui-org/react";
  
-import states from "../../components/Lookups.jsx"; 
+import { states } from "../../components/Lookups.jsx"; 
 
 const CompanyInformationForm = React.forwardRef(({ className, ...props }, ref) => {
     const inputProps = {

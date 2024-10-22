@@ -1,4 +1,5 @@
-const states = [
+  
+export const states = [
     {
         title: "Alabama",
         value: "alabama",
@@ -200,5 +201,21 @@ const states = [
         value: "wyoming",
     },
 ];
-
-export default states;
+export const attachmentTypes = [
+    {
+        title: "Resident Card/Identity Card",
+        value: "1",
+    },
+    {
+        title: "Passport",
+        value: "2",
+    },
+    {
+        title: "Salary Letter",
+        value: "3",
+    },
+    {
+        title: "Salary Assignment/Certificates",
+        value: "4",
+    },
+];

@@ -6,7 +6,9 @@ import { domAnimation, LazyMotion, m } from "framer-motion";
 import MultistepSidebar from "./multistep-sidebar";
 import SignUpForm from "./signup-form";
 import CompanyInformationForm from "./company-information-form";  
+import AttachmentForm from "./attachment-form";  
 import MultistepNavigationButtons from "./multistep-navigation-buttons";
+import ReviewAndPaymentForm from "./review-and-payment-form";
 
 const variants = {
     enter: (direction) => ({
@@ -60,9 +62,14 @@ export default function Component() {
 
         switch (page) {
             case 1:
+                component = <AttachmentForm />;
+                break;
+            case 2:
                 component = <CompanyInformationForm />;
                 break;
-             
+            case 3:
+                component = <ReviewAndPaymentForm />;
+                break;
         }
 
         return (
