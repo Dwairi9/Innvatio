@@ -16,7 +16,7 @@ export const ButtonWithBorderGradient = ({
     const style = {
         display: `${hide}`,
         border: "solid 2px transparent",
-        backgroundImage: `linear-gradient(${linearGradientBg}, ${linearGradientBg}), linear-gradient(to right, #F871A0, #9353D3)`,
+        backgroundImage: `linear-gradient(${linearGradientBg}, ${linearGradientBg}), linear-gradient(to right, #c6caff, #436fff)`,
         backgroundOrigin: "border-box",
         backgroundClip: "padding-box, border-box",
     };

@@ -18,6 +18,7 @@ import {
     PopoverTrigger,
     Avatar,
     Badge,
+    Image
 } from "@nextui-org/react";
 import { Icon } from "@iconify/react";  
 
@@ -32,8 +33,9 @@ export default function Component() {
             height="60px">
 
             <NavbarBrand>
-                <NavbarMenuToggle className="mr-2 h-6 sm:hidden" /> 
-                <p className="font-bold text-inherit">ACME</p>
+                <div className="rounded-full bg-foreground text-background">
+                    <Image width={100} alt="NextUI hero Image" src="/src/assets/innvatio.jpg" /> 
+                </div> 
             </NavbarBrand>
              
             <NavbarContent className="ml-auto flex h-12 max-w-fit items-center gap-0 rounded-full p-0 lg:bg-content2 lg:px-1 lg:dark:bg-content1" justify="end">

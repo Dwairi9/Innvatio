@@ -11,11 +11,11 @@ import MultistepNavigationButtons from "./multistep-navigation-buttons";
 
 const stepperClasses = cn(
     // light
-    "[--step-color:hsl(var(--nextui-secondary-400))]",
-    "[--active-color:hsl(var(--nextui-secondary-400))]",
-    "[--inactive-border-color:hsl(var(--nextui-secondary-200))]",
-    "[--inactive-bar-color:hsl(var(--nextui-secondary-200))]",
-    "[--inactive-color:hsl(var(--nextui-secondary-300))]",
+    "[--step-color:hsl(var(--nextui-default-400))]",
+    "[--active-color:hsl(var(--nextui-default-400))]",
+    "[--inactive-border-color:hsl(var(--nextui-default-200))]",
+    "[--inactive-bar-color:hsl(var(--nextui-default-200))]",
+    "[--inactive-color:hsl(var(--nextui-default-300))]",
     // dark
     "dark:[--step-color:rgba(255,255,255,0.1)]",
     "dark:[--active-color:hsl(var(--nextui-foreground-600))]",
@@ -33,7 +33,7 @@ const MultiStepSidebar = React.forwardRef(
                 className={cn("flex h-[calc(100vh_-_40px)] w-full gap-x-2", className)}
                 {...props}
             >
-                <div className="flex hidden h-full w-[344px] flex-shrink-0 flex-col items-start gap-y-8 rounded-large bg-gradient-to-b from-default-100 via-danger-100 to-secondary-100 px-8 py-6 shadow-small lg:flex">
+                <div className="flex hidden h-full w-[344px] flex-shrink-0 flex-col items-start gap-y-8 rounded-large gradient-blue from-default-100 via-danger-100 to-secondary-100 px-8 py-6 shadow-small lg:flex">
                     <Button
                         className="bg-default-50 text-small font-medium text-default-500 shadow-lg"
                         isDisabled={currentPage === 0}
@@ -55,7 +55,7 @@ const MultiStepSidebar = React.forwardRef(
                     {/* Desktop Steps */}
                     <VerticalSteps
                         className={stepperClasses}
-                        color="secondary"
+                        color="primary"
                         currentStep={currentPage}
                         steps={[
                             {
@@ -63,8 +63,8 @@ const MultiStepSidebar = React.forwardRef(
                                 description: "Setting up your foundation",
                             },
                             {
-                                title: "Company Information",
-                                description: "Tell us about your business",
+                                title: "Upload Attachment",
+                                description: "Submit the required info",
                             }
                         ]}
                         onStepChange={onChangePage}
