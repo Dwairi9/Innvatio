@@ -31,8 +31,8 @@ namespace Application.Servecies
                     var response = await client.SendAsync(message);
                 }
                 catch (Exception ex)
-                {  
-                    throw ex;
+                {
+                    Console.WriteLine(ex.Message); 
                 }
                 finally
                 { 

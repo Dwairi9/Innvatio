@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Input, Select, SelectItem, DatePicker, Button } from "@nextui-org/react";
-import CountryDropdown from "../../components/country-dropdown.jsx"; 
+import { Input, Select, SelectItem, DatePicker, Button, cn, Autocomplete, AutocompleteItem, Avatar, Spinner  } from "@nextui-org/react"; 
 import { attachmentTypes, states } from "../../components/Lookups.jsx";
+import { ButtonWithBorderGradient } from "../../components/button-with-border-gradient.jsx";
+import countries from "../../components/countries";
 
-const AttachmentForm = () => {
+const AttachmentForm = React.forwardRef(({ className, ...props }, ref) => {
     const [attachmentType, setAttachmentType] = useState("");
     const [attachment, setAttachment] = useState(null);
     const [englishName, setEnglishName] = useState("");
@@ -14,18 +15,13 @@ const AttachmentForm = () => {
     const [nationalty, setNationalty] = useState("");
     const [selectedCountry, setSelectedCountry] = useState("");
     const [error, setError] = useState("");
-
-    const selectProps = {
-        labelPlacement: "outside-left",
-        classNames: {
-            label: "text-small font-medium text-default-700 group-data-[filled=true]:text-default-700",
-        },
-    };
+    const [loading, setLoading] = useState(false); 
+    const [responseMessage, setResponseMessage] = useState(""); 
 
     const handleAttachmentTypeChange = (e) => {
         setAttachmentType(e.currentKey);
     };
-
+      
     const handleFileChange = (e) => {
         setAttachment(e.target.files[0]);
         setError("");
@@ -49,89 +45,128 @@ const AttachmentForm = () => {
         formData.append("Employer", employer);
         formData.append("EmployerName", employerName);
 
+        setLoading(true);
+
         try {
             const response = await axios.post("https://localhost:7268/Dahboard/UploadAttachment", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
             });
-            console.log(response.data); // Handle the response
-        } catch (error) {
+
+            setResponseMessage("Attachment uploaded successfully!");
+            console.log(response.data); 
+        }
+        catch (error) {
+            setResponseMessage("Error uploading attachment. Please try again.");
             console.error("Error uploading attachment:", error);
+        }
+        finally {
+            setLoading(false); 
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>  
+        <>
+            <form ref={ref} {...props} className={cn("flex grid grid-cols-12 flex-col gap-4 py-8", className)} onSubmit={handleSubmit}>
+                <label htmlFor="attachmentType" className="col-span-4">Attachment Type:</label>
                 <Select
-                    className="col-span-12 md:col-span-6"
-                    items={attachmentTypes}
-                    label="Attachment Type"
+                    className="col-span-12 md:col-span-8"
+                    items={attachmentTypes} 
                     id="attachmentType"
-                    placeholder="--Select Type--"
-                    {...selectProps}
+                    placeholder="--Select Type--" 
                     variant={"faded"}
                     onSelectionChange={handleAttachmentTypeChange} >
                         {(item) => (
                             <SelectItem key={item.value}>{item.title}</SelectItem>
                         )}  
                 </Select> 
-            </div>
              
-            {attachmentType === "1" && ( 
-                <div>
-                    <div className="flex w-full flex-wrap md:flex-nowrap gap-4 form-group"> 
-                        <Input id="englishName" type="text" value={englishName} variant={"faded"} label="Name in english" labelPlacement={"outside-left"} onChange={(e) => setEnglishName(e.target.value)} /> 
-                    </div> 
+                {attachmentType === "1" && ( 
+                    <>
+                        <label htmlFor="englishName" className="col-span-4">Name in english:</label>
+                        <Input id="englishName" type="text" value={englishName} variant={"faded"}  onChange={(e) => setEnglishName(e.target.value)} className="col-span-12  md:col-span-8" /> 
 
-                    <div className="flex w-full flex-wrap md:flex-nowrap gap-4 form-group"> 
-                        <Input id="nationalty" type="text" value={nationalty} variant={"faded"} label="Nationalty" labelPlacement={"outside-left"} onChange={(e) => setNationalty(e.target.value)} /> 
-                    </div> 
+                        <label htmlFor="nationalty" className="col-span-4">Nationalty:</label>
+                        <Input id="nationalty" type="text" value={nationalty} variant={"faded"} onChange={(e) => setNationalty(e.target.value)} className="col-span-12  md:col-span-8" /> 
 
-                    <div className="flex w-full flex-wrap md:flex-nowrap gap-4 form-group"> 
-                        <DatePicker id="dateOfBirth" variant={"faded"} label="Date Of Birth" labelPlacement={"outside-left"} onChange={setDateOfBirth} className="max-w-[284px]" />
-                    </div> 
-                </div>
-            )}
+                        <label htmlFor="dateOfBirth" className="col-span-4">Date Of Birth:</label>
+                        <DatePicker id="dateOfBirth" variant={"faded"} onChange={setDateOfBirth} className="col-span-12  md:col-span-8"  />
+                    </>
+                )}
 
-            {attachmentType === "2" && (
-                <div>
-                    <div className="flex w-full flex-wrap md:flex-nowrap gap-4"> 
-                        <Input id="englishName" type="text" value={englishName} variant={"faded"} label="Name in english" labelPlacement={"outside-left"} onChange={(e) => setEnglishName(e.target.value)} />
-                    </div> 
+                {attachmentType === "2" && (
+                    <>
+                        <label htmlFor="englishName" className="col-span-4">Name in english:</label>
+                        <Input id="englishName" type="text" value={englishName} variant={"faded"} onChange={(e) => setEnglishName(e.target.value)} className="col-span-12  md:col-span-8" />
 
-                    <div className="flex w-full flex-wrap md:flex-nowrap gap-4"> 
-                        <CountryDropdown />
-                    </div> 
+                        <label htmlFor="country" className="col-span-4">Country:</label>
+                        <Autocomplete
+                            className="col-span-12"
+                            defaultItems={countries}
+                            className="col-span-12  md:col-span-8"
+                            name="country"
+                            placeholder="--Select Country--"
+                            showScrollIndicators={false}
+                            onSelectionChange={setSelectedCountry }
+                        >
+                            {(item) => (
+                                <AutocompleteItem
+                                    key={item.name}
+                                    startContent={
+                                        <Avatar
+                                            alt="Country Flag"
+                                            className="h-6 w-6"
+                                            src={`https://flagcdn.com/${item.code.toLowerCase()}.svg`}
+                                        />
+                                    }
+                                    value={item.name}
+                                >
+                                    {item.name}
+                                </AutocompleteItem>
+                            )}
+                        </Autocomplete> 
 
-                    <div className="flex w-full flex-wrap md:flex-nowrap gap-4"> 
-                        <DatePicker id="dateOfBirth" variant={"faded"} label="Date Of Birth" labelPlacement={"outside-left"} onChange={setDateOfBirth} className="max-w-[284px]" />
-                    </div> 
-                </div>
-            )}
+                        <label htmlFor="dateOfBirth" className="col-span-4">Date Of Birth:</label>
+                        <DatePicker id="dateOfBirth" variant={"faded"} onChange={setDateOfBirth} className="col-span-12  md:col-span-8" />
+                    </>
+                )}
 
-            {attachmentType === "3" || attachmentType === "4" && (
-                <div>
-                    <div className="flex w-full flex-wrap md:flex-nowrap gap-4"> 
-                        <Input id="employer" type="text" value={employer} variant={"faded"} label="Employer" labelPlacement={"outside-left"} onChange={(e) => setEmployer(e.target.value)} />
-                    </div>
+                {attachmentType === "3" && (
+                    <>
+                        <label htmlFor="employer" className="col-span-4">Employer:</label>
+                        <Input id="employer" type="text" value={employer} variant={"faded"} onChange={(e) => setEmployer(e.target.value)} className="col-span-12  md:col-span-8" />
 
-                    <div className="flex w-full flex-wrap md:flex-nowrap gap-4"> 
-                        <Input id="employerName" type="text" value={employerName} variant={"faded"} label="Employer Name" labelPlacement={"outside-left"} onChange={(e) => setEmployerName(e.target.value)} />
-                    </div> 
-                </div>
-            )}
+                        <label htmlFor="employerName" className="col-span-4">Employer Name:</label>
+                        <Input id="employerName" type="text" value={employerName} variant={"faded"} onChange={(e) => setEmployerName(e.target.value)} className="col-span-12  md:col-span-8" />
+                    </>
+                )}
 
-            <div>
-                <label htmlFor="attachment">Upload Attachment:</label>
-                <input id="attachment" type="file" onChange={handleFileChange}   />
-                {error && <p style={{ color: "red" }}>{error}</p>} {/* Show error */}
-            </div>
+                {attachmentType === "4" && (
+                    <>
+                        <label htmlFor="employer" className="col-span-4">Employer:</label>
+                        <Input id="employer" type="text" value={employer} variant={"faded"} onChange={(e) => setEmployer(e.target.value)} className="col-span-12  md:col-span-8" />
 
-            <button type="submit">Submit</button>
-        </form>
+                        <label htmlFor="employerName" className="col-span-4">Employer Name:</label>
+                        <Input id="employerName" type="text" value={employerName} variant={"faded"} onChange={(e) => setEmployerName(e.target.value)} className="col-span-12  md:col-span-8" />
+                    </>
+                )}
+
+                <> 
+                    <label htmlFor="attachment" className="col-span-5">Upload Attachment:</label>
+                    <input id="attachment" type="file" onChange={handleFileChange} className="form-control col-span-7" />
+                    {error && <label className="col-span-12" style={{ color: "red", textAlign: "left" }}>{error}</label>} {/* Show error */} 
+                </>
+
+                {loading && <div className="col-span-12"><Spinner color="secondary" /></div>}
+                {responseMessage && <div className="col-span-12" style={{ color: loading ? "gray" : "green", textAlign: "left" }}>{responseMessage}</div>}
+
+                <ButtonWithBorderGradient className="text-medium font-medium"  type="submit" >
+                    Submit
+                </ButtonWithBorderGradient> 
+                </form>
+        </>
     );
-};
+});
 
 export default AttachmentForm;

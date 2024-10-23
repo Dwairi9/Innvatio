@@ -4,8 +4,6 @@ import React from "react";
 import { Button } from "@nextui-org/react";
 import { Icon } from "@iconify/react";
 import { cn } from "@nextui-org/react";
-
-import SupportCard from "./support-card";
 import VerticalSteps from "./vertical-steps";
 
 import RowSteps from "./row-steps";
@@ -28,7 +26,7 @@ const stepperClasses = cn(
 );
 
 const MultiStepSidebar = React.forwardRef(
-    ({ children, className, currentPage, onBack, onNext, onChangePage, ...props }, ref) => {
+    ({ children, className, currentPage, onBack, onNext, onChangePage, hide, ...props }, ref) => {
         return (
             <div
                 ref={ref}
@@ -67,22 +65,12 @@ const MultiStepSidebar = React.forwardRef(
                             {
                                 title: "Company Information",
                                 description: "Tell us about your business",
-                            },
-                            {
-                                title: "Choose Address",
-                                description: "Select your official location",
-                            },
-                            {
-                                title: "Payment",
-                                description: "Finalize your registration",
-                            },
+                            }
                         ]}
                         onStepChange={onChangePage}
                     />
-
-                    <SupportCard className="w-full backdrop-blur-lg lg:bg-white/40 lg:shadow-none dark:lg:bg-white/20" />
                 </div>
-                <div className="flex h-full w-full flex-col items-center gap-4 md:p-4">
+                <div className="flex h-full w-full flex-col  gap-4 md:p-4">
                     <div className="sticky top-0 z-10 w-full rounded-large bg-gradient-to-r from-default-100 via-danger-100 to-secondary-100 py-4 shadow-small md:max-w-xl lg:hidden">
                         <div className="flex justify-center">
                             {/* Mobile Steps */}
@@ -113,18 +101,12 @@ const MultiStepSidebar = React.forwardRef(
                             backButtonProps={{ isDisabled: currentPage === 0 }}
                             className="lg:hidden"
                             nextButtonProps={{
-                                children:
-                                    currentPage === 0
-                                        ? "Sign Up for Free"
-                                        : currentPage === 3
-                                            ? "Go to Payment"
-                                            : "Continue",
+                                children: currentPage === 0 ? "Sign Up for Free" : "Submit",
                             }}
                             onBack={onBack}
                             onNext={onNext}
+                            hide={currentPage === 1 ? "none" : "block"}
                         />
-
-                        <SupportCard className="mx-auto w-full max-w-[252px] lg:hidden" />
                     </div>
                 </div>
             </div>

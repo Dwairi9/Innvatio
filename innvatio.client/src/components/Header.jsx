@@ -45,15 +45,15 @@ export default function Component() {
 
                 <NavbarItem className="px-2">
                     <Dropdown placement="bottom-end">
-                        <DropdownTrigger>
-                            <button className="mt-1 h-8 w-8 outline-none transition-transform">
+                        <DropdownTrigger className="mr-5 mb-5">
+                            <button className="mt-4 h-8 w-8 outline-none transition-transform">
                                 <Badge
                                     className="border-transparent"
                                     color="success"
                                     content=""
                                     placement="bottom-right"
                                     shape="circle"
-                                    size="sm"
+                                    size="sm" 
                                 >
                                     <Avatar size="sm" src="https://i.pravatar.cc/150?u=a04258114e29526708c" />
                                 </Badge>

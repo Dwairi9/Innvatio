@@ -34,7 +34,7 @@ export default function Component() {
         setPage((prev) => {
             const nextPage = prev[0] + newDirection;
 
-            if (nextPage < 0 || nextPage > 3) return prev;
+            if (nextPage < 0 || nextPage > 1) return prev;
 
             return [nextPage, newDirection];
         });
@@ -42,7 +42,7 @@ export default function Component() {
 
     const onChangePage = React.useCallback((newPage) => {
         setPage((prev) => {
-            if (newPage < 0 || newPage > 3) return prev;
+            if (newPage < 0 || newPage > 1) return prev;
             const currentPage = prev[0];
 
             return [newPage, newPage > currentPage ? 1 : -1];
@@ -63,13 +63,7 @@ export default function Component() {
         switch (page) {
             case 1:
                 component = <AttachmentForm />;
-                break;
-            case 2:
-                component = <CompanyInformationForm />;
-                break;
-            case 3:
-                component = <ReviewAndPaymentForm />;
-                break;
+                break; 
         }
 
         return (
@@ -102,6 +96,7 @@ export default function Component() {
             onBack={onBack}
             onChangePage={onChangePage}
             onNext={onNext}
+            hide={page === 1 ? "none" : "block"}
         >
             <div className="relative flex h-fit w-full flex-col pt-6 text-center lg:h-full lg:justify-center lg:pt-0">
                 {content}
@@ -109,10 +104,11 @@ export default function Component() {
                     backButtonProps={{ isDisabled: page === 0 }}
                     className="hidden justify-start lg:flex"
                     nextButtonProps={{
-                        children: page === 0 ? "Sign Up for Free" : page === 3 ? "Go to Payment" : "Continue",
+                        children: page === 0 ? "Sign Up for Free" : "Submit",
                     }}
                     onBack={onBack}
                     onNext={onNext}
+                    hide={ page === 1 ? "none" : "block"}
                 />
             </div>
         </MultistepSidebar>
